@@ -1,3 +1,7 @@
+*.class
+*.log
+*.jar
+
 # Ignore Gradle project-specific cache directory
 .gradle
 
