@@ -21,4 +21,28 @@ public class LongestPalindromicSubsequenceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void testEmptyString() {
+        String input = "";
+        String expected = "";
+        String actual = LongestPalindromicSubsequence.of(input);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testOneCharString() {
+        String input = "a";
+        String expected = "a";
+        String actual = LongestPalindromicSubsequence.of(input);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testAllStringIsPalindrome() {
+        String input = "aaaaaaaaaaaaaaaaaaaa";
+        String expected = input;
+        String actual = LongestPalindromicSubsequence.of(input);
+        assertEquals(expected, actual);
+    }
+
 }

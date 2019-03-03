@@ -4,6 +4,10 @@ package algorithms.dynpro;
 public class LongestPalindromicSubsequence {
 
     public static String of(String input) {
+
+        if (input.length() == 0) { return ""; }
+        if (input.length() == 1) { return input; }
+
         char[] inputArray = input.toCharArray();
         int[][] memo = new int[inputArray.length][inputArray.length];
 
