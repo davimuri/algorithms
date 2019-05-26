@@ -1,5 +1,8 @@
 package algorithms.trees;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * Given preorder and inorder traversal of a tree, construct the binary tree.
@@ -15,59 +18,43 @@ public class BuildBinaryTreeGivenPreorderInorder {
 
     public static BinaryNode build(int[] preorder, int[] inorder) {
 
-        return buildSubtree(preorder, inorder);
+        Map<Integer, Integer> elementToIndex = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            elementToIndex.put(inorder[i], i);
+        }
+
+        return buildSubtree(preorder, inorder, 0, preorder.length - 1,
+                0, inorder.length - 1, elementToIndex);
     }
 
-    private static BinaryNode buildSubtree(int[] preorder, int[] inorder) {
-        if (preorder.length == 0) {
+    private static BinaryNode buildSubtree(int[] preorder, int[] inorder, int preorderStart, int preorderEnd,
+                                           int inorderStart, int inorderEnd, Map<Integer, Integer> elementToIndex) {
+
+        if (inorderStart > inorderEnd) {
             return null;
         }
-        BinaryNode root = new BinaryNode(preorder[0]);
-        int endInorder = findIndex(root.value, inorder);
-        int[] leftInorder = subArray(inorder, 0, endInorder);
-        int[] leftPreorder = findSubArray(leftInorder, preorder);
-        root.left = buildSubtree(leftPreorder, leftInorder);
 
-        int[] rightInorder = subArray(inorder, endInorder + 1, inorder.length);
-        int[] rightPreorder = findSubArray(rightInorder, preorder);
-        root.right = buildSubtree(rightPreorder, rightInorder);
+        BinaryNode root = new BinaryNode(preorder[preorderStart]);
+
+        int preorderLeftStart = preorderStart + 1;
+        int inorderLeftStart = inorderStart;
+        int inorderLeftEnd = elementToIndex.get(root.value) - 1;
+
+        // distances of left subarrays should be equal:
+        // inorderLeftEnd - inorderLeftStart == preorderLeftEnd - preorderLeftStart
+        int preorderLeftEnd = inorderLeftEnd - inorderLeftStart + preorderLeftStart;
+
+        int inorderRightStart = inorderLeftEnd + 2;
+        int inorderRightEnd = inorderEnd;
+        int preorderRightEnd = preorderEnd;
+        int preorderRightStart = preorderLeftEnd + 1;
+
+        root.left = buildSubtree(preorder, inorder, preorderLeftStart, preorderLeftEnd,
+                inorderLeftStart, inorderLeftEnd, elementToIndex);
+        root.right = buildSubtree(preorder, inorder, preorderRightStart, preorderRightEnd,
+                inorderRightStart, inorderRightEnd, elementToIndex);
 
         return root;
-    }
-
-    private static int[] subArray(int[] original, int start, int end) {
-        int[] subarray = new int[end - start];
-        if (subarray.length == 0) return subarray;
-
-        System.arraycopy(original, start, subarray, 0, end - start);
-        return subarray;
-    }
-
-    private static int[] findSubArray(int[] toFind, int[] array) {
-        int[] subarray = new int[toFind.length];
-        int index = 0;
-        for (int e : array) {
-            for (int t: toFind) {
-                if (e == t) {
-                    subarray[index++] = e;
-                    break;
-                }
-            }
-            if (index == toFind.length) {
-                break;
-            }
-        }
-
-        return subarray;
-    }
-
-    private static int findIndex(int value, int[] traversal) {
-        for (int i = 0; i < traversal.length; i++) {
-            if (value == traversal[i]) {
-                return i;
-            }
-        }
-        return -1;
     }
 
 }
