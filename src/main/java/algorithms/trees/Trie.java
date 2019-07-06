@@ -16,6 +16,10 @@ public class Trie {
             value = val;
         }
 
+        public boolean valueEquals(char v) {
+            return value == v;
+        }
+
         public boolean isLeaf() {
             return children.size() == 0;
         }
