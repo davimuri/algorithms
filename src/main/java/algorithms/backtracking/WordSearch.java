@@ -25,22 +25,22 @@ public class WordSearch {
         this.board = board;
         this.word = word;
         this.visited = new boolean[board.length][board[0].length];
-        for (int i = 0; i < word.length(); i++) {
-            if (search(0, 0, i)) return true;
+        for (int r = 0; r < board.length; r++) {
+            for (int c = 0; c < board[r].length; c++) {
+                if (search(r, c, 0)) return true;
+            }
         }
         return false;
     }
 
     private boolean search(int r, int c, int i) {
         if (r < 0 || r >= board.length || c < 0 || c >= board[0].length
-            || i >= word.length() || board[r][c] != word.charAt(i)) {
+            || i >= word.length() || board[r][c] != word.charAt(i)
+            || visited[r][c]) {
             return false;
         }
         if (i == word.length()-1 && board[r][c] == word.charAt(i)) {
             return true;
-        }
-        if (board[r][c] != word.charAt(i)) {
-            return false;
         }
         visited[r][c] = true;
         if (search(r+1, c, i+1)) return true;
