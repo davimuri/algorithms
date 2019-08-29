@@ -23,34 +23,24 @@ public class MergeIntervals {
         if (intervals == null) {
             return null;
         }
-        List<IntervalElement> intervalElements = new ArrayList<>(intervals.length * 2);
-        for (int[] interval : intervals) {
-            intervalElements.add(new IntervalElement(interval[0], true));
-            intervalElements.add(new IntervalElement(interval[1], false));
-        }
-        intervalElements.sort(Comparator.comparingInt(ie -> ie.value));
 
-        List<int[]> output = new ArrayList<>();
-        int start = Integer.MAX_VALUE;
-        int end = Integer.MIN_VALUE;
-        for (IntervalElement ie : intervalElements) {
-            if (ie.start && start > ie.value) {
-                start = ie.value;
-            } else if (!ie.start && end < ie.value) {
-                end = ie.value;
-            } else if (ie.start && ie.value > end && end != Integer.MIN_VALUE) {
-                output.add(new int[] {start, end});
-                start = ie.value;
-                end = Integer.MIN_VALUE;
+        Arrays.sort(intervals, Comparator.comparingInt(i -> i[0]));
+        List<int[]> mergedIntervals = new ArrayList<>();
+        for (int[] interval : intervals) {
+            int oldEnd = Integer.MIN_VALUE;
+            if (!mergedIntervals.isEmpty()) {
+                oldEnd = mergedIntervals.get(mergedIntervals.size() - 1)[1];
+            }
+            if (mergedIntervals.isEmpty() || interval[0] > oldEnd) {
+                mergedIntervals.add(interval);
+            } else if (interval[0] <= oldEnd) {
+                mergedIntervals.get(mergedIntervals.size()-1)[1] = Math.max(oldEnd, interval[1]);
             }
         }
-        if (start <= end) {
-            output.add(new int[] {start, end});
-        }
 
-        int[][] arrayOutput = new int[output.size()][2];
+        int[][] arrayOutput = new int[mergedIntervals.size()][2];
         int index = 0;
-        for (int[] outInterval : output) {
+        for (int[] outInterval : mergedIntervals) {
             arrayOutput[index++] = outInterval;
         }
 
