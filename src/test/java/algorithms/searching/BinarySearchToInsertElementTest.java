@@ -1,5 +1,6 @@
-package algorithms.binsearch;
+package algorithms.searching;
 
+import algorithms.searching.BinarySearchToInsertElement;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,4 +1,4 @@
-package algorithms.binsearch;
+package algorithms.searching;
 
 /**
  * Find right index to insert an element in a sorted array

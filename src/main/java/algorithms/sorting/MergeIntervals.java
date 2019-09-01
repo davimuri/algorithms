@@ -8,42 +8,25 @@ import java.util.*;
  */
 public class MergeIntervals {
 
-    private class IntervalElement {
-        private int value;
-        private boolean start;
-
-        private IntervalElement(int val, boolean start) {
-            this.value = val;
-            this.start = start;
-        }
-
-    }
-
     public int[][] merge(int[][] intervals) {
         if (intervals == null) {
             return null;
         }
-
+        if (intervals.length == 0) {
+            return new int[0][0];
+        }
         Arrays.sort(intervals, Comparator.comparingInt(i -> i[0]));
-        List<int[]> mergedIntervals = new ArrayList<>();
-        for (int[] interval : intervals) {
-            int oldEnd = Integer.MIN_VALUE;
-            if (!mergedIntervals.isEmpty()) {
-                oldEnd = mergedIntervals.get(mergedIntervals.size() - 1)[1];
-            }
-            if (mergedIntervals.isEmpty() || interval[0] > oldEnd) {
-                mergedIntervals.add(interval);
-            } else if (interval[0] <= oldEnd) {
-                mergedIntervals.get(mergedIntervals.size()-1)[1] = Math.max(oldEnd, interval[1]);
+        List<int[]> mergedIntervals = new ArrayList<>(intervals.length);
+        mergedIntervals.add(intervals[0]);
+        for (int i = 1; i < intervals.length; i++) {
+            int oldEnd = mergedIntervals.get(mergedIntervals.size() - 1)[1];
+            if (intervals[i][0] > oldEnd) {
+                mergedIntervals.add(intervals[i]);
+            } else if (intervals[i][0] <= oldEnd) {
+                mergedIntervals.get(mergedIntervals.size()-1)[1] = Math.max(oldEnd, intervals[i][1]);
             }
         }
 
-        int[][] arrayOutput = new int[mergedIntervals.size()][2];
-        int index = 0;
-        for (int[] outInterval : mergedIntervals) {
-            arrayOutput[index++] = outInterval;
-        }
-
-        return arrayOutput;
+        return mergedIntervals.toArray(new int[mergedIntervals.size()][]);
     }
 }
