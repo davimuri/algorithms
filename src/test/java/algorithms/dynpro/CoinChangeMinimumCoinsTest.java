@@ -18,7 +18,7 @@ public class CoinChangeMinimumCoinsTest {
     public void testCase2() {
         int[] coins = { 2 };
         int amount = 3;
-        String expected = "-1";
+        String expected = "";
         CoinChangeMinimumCoins coinChanger = new CoinChangeMinimumCoins();
         Assert.assertEquals(expected, coinChanger.solve(coins, amount));
     }
