@@ -5,14 +5,18 @@ import java.util.Arrays;
 public class CoinChangeMinimumCoins {
 
     public String solve(int[] coins, int amount) {
+        if (amount == 0) return "";
+
         Arrays.sort(coins);
         int[][] matrix = new int[coins.length][amount+1];
 
-        for (int j = 0; j < matrix[0].length; j++) {
+        for (int j = 1; j < matrix[0].length; j++) {
             int currentCoin = coins[0];
             int currentAmount = j;
             if (currentAmount >= currentCoin && currentAmount % currentCoin == 0) {
                 matrix[0][j] = currentAmount / currentCoin;
+            } else {
+                matrix[0][j] = Integer.MAX_VALUE - 1;
             }
         }
 
@@ -31,7 +35,7 @@ public class CoinChangeMinimumCoins {
 
         print(matrix);
 
-        if (matrix[matrix.length-1][matrix[0].length-1] == 0) {
+        if (matrix[matrix.length-1][matrix[0].length-1] == Integer.MAX_VALUE - 1) {
             return "";
         }
 

@@ -45,7 +45,16 @@ public class CoinChangeMinimumCoinsTest {
     public void testCase5() {
         int[] coins = {186, 419, 83, 408};
         int amount = 6249;
-        String expected = "";
+        String expected = "419 * 5 + 408 * 8 + 186 * 3 + 83 * 4";
+        CoinChangeMinimumCoins coinChanger = new CoinChangeMinimumCoins();
+        Assert.assertEquals(expected, coinChanger.solve(coins, amount));
+    }
+
+    @Test
+    public void testCase6() {
+        int[] coins = {1, 2};
+        int amount = 2;
+        String expected = "2 * 1";
         CoinChangeMinimumCoins coinChanger = new CoinChangeMinimumCoins();
         Assert.assertEquals(expected, coinChanger.solve(coins, amount));
     }
