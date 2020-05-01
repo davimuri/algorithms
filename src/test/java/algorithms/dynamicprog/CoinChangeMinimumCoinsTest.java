@@ -1,4 +1,4 @@
-package algorithms.dynpro;
+package algorithms.dynamicprog;
 
 import org.junit.Assert;
 import org.junit.Test;

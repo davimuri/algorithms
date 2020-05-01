@@ -1,4 +1,4 @@
-package algorithms.dynpro;
+package algorithms.dynamicprog;
 
 import java.util.Arrays;
 

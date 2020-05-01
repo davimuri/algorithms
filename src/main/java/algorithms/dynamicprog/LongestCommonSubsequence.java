@@ -1,4 +1,4 @@
-package algorithms.dynpro;
+package algorithms.dynamicprog;
 
 // https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
 // https://www.hackerrank.com/challenges/common-child/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=strings

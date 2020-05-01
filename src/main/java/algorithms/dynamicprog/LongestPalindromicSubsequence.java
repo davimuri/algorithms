@@ -1,4 +1,4 @@
-package algorithms.dynpro;
+package algorithms.dynamicprog;
 
 // https://www.youtube.com/watch?v=yZWmS6CXbQc&t=799s
 public class LongestPalindromicSubsequence {
